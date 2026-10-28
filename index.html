@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#04091a" />
+  <meta name="description" content="Plano de fundo azul-escuro com luzes, partículas e interações futurísticas." />
+  <title>NEXUS Arena</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body class="menu-mode">
+  <canvas id="universe" aria-hidden="true"></canvas>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+  <div class="selection-marquee" id="selectionMarquee" aria-hidden="true"><span></span><i></i></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="edge-vignette" aria-hidden="true"></div>
+
+  <div class="hud" aria-live="polite">
+    <div class="score"><b id="scoreYou">0</b><span>VOCÊ</span><em>:</em><span>NEXUS</span><b id="scoreCpu">0</b></div>
+    <small id="hudRally"></small>
+    <div class="hud-msg show" id="hudMsg">Prepare-se… o NEXUS vai sacar</div>
+  </div>
+
+  <aside class="tips" id="tips" aria-live="polite"><b>DICA</b><p id="tipText"></p></aside>
+
+  <div class="menu" id="menu">
+    <h1>NEXUS ARENA</h1>
+    <p class="sub">PING-PONG · FUTEBOL · ROLETA RUSSA</p>
+    <button id="btnPlay" type="button">JOGAR</button>
+    <button id="btnQuit" type="button">SAIR</button>
+    <p class="taunt" id="taunt"></p>
+  </div>
+
+
+
+  <div class="screen-flash" aria-hidden="true"></div>
+</body>
+</html>

@@ -1,0 +1,165 @@
+:root {
+  color-scheme: dark;
+  --bg: #04091a;
+  --cyan: #65e6ff;
+  --blue: #4c83ff;
+  --violet: #a58aff;
+  --mouse-x: 50vw;
+  --mouse-y: 50vh;
+  --mono: 'DM Mono', monospace;
+  --display: 'Space Grotesk', sans-serif;
+}
+* { box-sizing: border-box; }
+html { min-width: 320px; background: var(--bg); scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; min-height: 100vh; overflow-x: hidden; background: radial-gradient(ellipse at 50% 35%, #0a1b3d 0%, #050d24 37%, var(--bg) 76%); color: #eaf4ff; font-family: var(--display); }
+button { color: inherit; font: inherit; }
+#universe { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.ambient { position: fixed; z-index: 0; pointer-events: none; border-radius: 50%; filter: blur(100px); opacity: .2; transition: opacity .6s ease; will-change: transform; }
+.ambient-one { width: 56vw; height: 56vw; min-width: 340px; min-height: 340px; top: -24vw; right: -16vw; background: #155bff; transform: translate3d(calc(var(--mouse-x) * .018), calc(var(--mouse-y) * .013), 0); }
+.ambient-two { width: 48vw; height: 48vw; min-width: 300px; min-height: 300px; left: -22vw; bottom: -25vw; background: #008fe8; transform: translate3d(calc(var(--mouse-x) * -.018), calc(var(--mouse-y) * -.014), 0); }
+.cursor-glow { position: fixed; z-index: 1; left: var(--mouse-x); top: var(--mouse-y); width: 390px; height: 390px; pointer-events: none; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(49, 135, 255, .18), rgba(32, 100, 230, .07) 35%, transparent 70%); mix-blend-mode: screen; transition: opacity .25s; }
+.grain { position: fixed; inset: 0; z-index: 2; pointer-events: none; opacity: .035; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.48'/%3E%3C/svg%3E"); }
+.edge-vignette { position: fixed; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(ellipse at center, transparent 35%, rgba(1, 4, 14, .42) 100%); }
+.scroll-space { height: 260vh; pointer-events: none; }
+.screen-flash { position: fixed; inset: 0; z-index: 8; pointer-events: none; opacity: 0; background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(92, 224, 255, .22), rgba(58, 107, 255, .07) 29%, transparent 69%); }
+.screen-flash.flash { animation: screen-flash .7s ease-out; }
+
+.scroll-markers { position: fixed; z-index: 3; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 6px; pointer-events: none; opacity: .45; }
+.scroll-markers i { display: block; width: 2px; height: 8px; background: rgba(112, 174, 255, .4); transition: background .2s, box-shadow .2s; }
+.scroll-markers i.active { background: var(--cyan); box-shadow: 0 0 7px var(--cyan); }
+body.orbit-mode .ambient-one { opacity: .33; } body.orbit-mode .ambient-two { opacity: .25; }
+body.warp-mode #universe { filter: hue-rotate(70deg) saturate(1.25); }
+body.warp-mode .ambient { opacity: .3; }
+body.scroll-down #universe { filter: hue-rotate(8deg); }
+body.scroll-up #universe { filter: hue-rotate(-12deg); }
+@keyframes screen-flash { 0% { opacity: 0; } 16% { opacity: 1; } 100% { opacity: 0; } }
+@media (max-width: 520px) {
+  .cursor-glow { width: 280px; height: 280px; }
+  .ambient { filter: blur(75px); }
+  .scroll-markers { right: 8px; gap: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+/* Camada extra: acabamento cinematográfico sem transformar o fundo em tema de conteúdo. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: .16;
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, rgba(111, 190, 255, .08) 4px, transparent 5px);
+  mix-blend-mode: screen;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 12px;
+  z-index: 3;
+  pointer-events: none;
+  opacity: .32;
+  background:
+    linear-gradient(var(--cyan), var(--cyan)) left top / 34px 1px no-repeat,
+    linear-gradient(var(--cyan), var(--cyan)) left top / 1px 34px no-repeat,
+    linear-gradient(var(--blue), var(--blue)) right top / 34px 1px no-repeat,
+    linear-gradient(var(--blue), var(--blue)) right top / 1px 34px no-repeat,
+    linear-gradient(var(--blue), var(--blue)) left bottom / 34px 1px no-repeat,
+    linear-gradient(var(--blue), var(--blue)) left bottom / 1px 34px no-repeat,
+    linear-gradient(var(--violet), var(--violet)) right bottom / 34px 1px no-repeat,
+    linear-gradient(var(--violet), var(--violet)) right bottom / 1px 34px no-repeat;
+  filter: drop-shadow(0 0 5px rgba(101, 230, 255, .45));
+}
+.cursor-glow { width: 470px; height: 470px; opacity: .9; transition: width .25s ease, height .25s ease, opacity .3s ease; }
+body.scroll-down .ambient-one { opacity: .29; }
+body.scroll-up .ambient-two { opacity: .3; }
+body.orbit-mode #universe { filter: saturate(1.22); }
+body.warp-mode .cursor-glow { opacity: 1; }
+@media (max-width: 520px) {
+  body::after { inset: 7px; opacity: .22; }
+  .cursor-glow { width: 300px; height: 300px; }
+}
+
+/* Seleção holográfica: funciona como o retângulo de seleção do desktop, mas em azul neon. */
+.selection-marquee {
+  position: fixed;
+  z-index: 20;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  overflow: visible;
+  border: 1px solid rgba(95, 221, 255, .95);
+  background: linear-gradient(135deg, rgba(40, 153, 255, .20), rgba(62, 110, 255, .10) 58%, rgba(119, 94, 255, .15));
+  box-shadow: 0 0 12px rgba(59, 190, 255, .22), inset 0 0 22px rgba(59, 190, 255, .09);
+  backdrop-filter: blur(1.5px) saturate(145%);
+  transition: opacity .18s ease;
+}
+.selection-marquee.visible { opacity: 1; }
+.selection-marquee::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent 0 5px, rgba(118, 224, 255, .09) 6px 7px);
+}
+.selection-marquee span {
+  position: absolute;
+  top: -1px; left: -1px;
+  width: 7px; height: 7px;
+  border: 1px solid #d6fbff;
+  background: #55dfff;
+  box-shadow: 0 0 9px #4bdcff;
+}
+.selection-marquee i {
+  position: absolute;
+  right: -1px; bottom: -1px;
+  width: 7px; height: 7px;
+  border: 1px solid #d6fbff;
+  background: #55dfff;
+  box-shadow: 0 0 9px #4bdcff;
+}
+.selection-marquee.settling { animation: marquee-release .62s ease-out forwards; }
+@keyframes marquee-release {
+  0% { opacity: 1; filter: brightness(1.5); }
+  35% { opacity: .92; box-shadow: 0 0 28px rgba(59, 190, 255, .42), inset 0 0 32px rgba(59, 190, 255, .2); }
+  100% { opacity: 0; }
+}
+
+/* HUD do ping-pong */
+body { touch-action: none; }
+.hud { position: fixed; z-index: 6; top: 20px; left: 50%; transform: translateX(-50%); text-align: center; pointer-events: none; font-family: var(--mono); color: #bdcde9; letter-spacing: .16em; text-shadow: 0 0 12px rgba(80, 170, 255, .4); }
+.score { display: flex; align-items: baseline; justify-content: center; gap: 14px; font-size: 10px; }
+.score b { font: 500 34px var(--display); color: #e9fbff; letter-spacing: 0; min-width: 28px; }
+.score em { color: var(--cyan); font-style: normal; }
+.hud small { display: block; min-height: 12px; margin-top: 2px; font-size: 9px; color: #6e91bd; }
+.hud-msg { margin-top: 10px; font-size: 11px; color: var(--cyan); opacity: 0; transition: opacity .3s; }
+.hud-msg.show { opacity: 1; }
+
+/* Caixa de dicas */
+.tips { position: fixed; z-index: 7; top: 20px; right: 36px; width: 235px; padding: 12px 14px; border: 1px solid rgba(122, 192, 255, .3); background: linear-gradient(145deg, rgba(10, 27, 61, .82), rgba(4, 12, 33, .78)); backdrop-filter: blur(14px); font: 11px/1.55 var(--mono); color: #bdcde9; opacity: 0; transform: translateY(-6px); transition: opacity .35s, transform .35s; pointer-events: none; }
+.tips.show { opacity: 1; transform: none; }
+.tips b { display: block; margin-bottom: 5px; color: var(--cyan); font-weight: 400; font-size: 9px; letter-spacing: .22em; }
+.tips p { margin: 0; }
+@media (max-width: 520px) { .tips { right: 12px; width: 190px; font-size: 10px; } }
+/* Modo vermelho: toda a interface (fundo, canvas, HUD, seleção) vira vermelha */
+html { filter: hue-rotate(0deg) saturate(1); transition: filter .5s; }
+html.red-mode { filter: hue-rotate(140deg) saturate(1.5); }
+
+/* Roleta russa (50 pontos): some a interface do jogo normal */
+body.roulette-mode .hud, body.roulette-mode .tips, body.roulette-mode .scroll-markers { display: none; }
+
+/* Menu inicial (JOGAR / SAIR fujão) */
+body.menu-mode .hud, body.menu-mode .tips, body.menu-mode .scroll-markers { display: none; }
+.menu { position: fixed; inset: 0; z-index: 30; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; background: radial-gradient(ellipse at center, rgba(4, 9, 26, .25), rgba(4, 9, 26, .8)); transition: opacity .45s; }
+.menu.hidden { opacity: 0; pointer-events: none; visibility: hidden; }
+.menu h1 { margin: 0; font: 600 clamp(38px, 9vw, 96px)/1 var(--display); letter-spacing: .12em; color: #eaf8ff; text-shadow: 0 0 28px rgba(80, 190, 255, .7); }
+.menu .sub { margin: 0 0 22px; font: 12px var(--mono); letter-spacing: .3em; color: #6e91bd; }
+.menu button { width: 240px; padding: 16px 0; font: 500 18px var(--display); letter-spacing: .3em; color: #eaf8ff; cursor: pointer; background: linear-gradient(145deg, rgba(20, 60, 130, .55), rgba(8, 22, 60, .6)); border: 1px solid rgba(110, 200, 255, .6); box-shadow: 0 0 18px rgba(60, 170, 255, .25); transition: box-shadow .2s, background .2s; }
+.menu button:hover, .menu button:focus-visible { box-shadow: 0 0 32px rgba(90, 210, 255, .65); background: linear-gradient(145deg, rgba(30, 90, 190, .7), rgba(10, 30, 80, .7)); outline: none; }
+.menu #btnQuit.flying { position: fixed; z-index: 31; margin: 0; transition: left .35s cubic-bezier(.2, .9, .3, 1.15), top .35s cubic-bezier(.2, .9, .3, 1.15), box-shadow .2s; }
+.menu .taunt { min-height: 16px; margin: 0; font: 11px var(--mono); letter-spacing: .12em; color: var(--violet); }
+
+/* Tela cheia: sem rolagem nem barra lateral */
+html, body { height: 100%; overflow: hidden; }
+.scroll-space, .scroll-markers { display: none; }
