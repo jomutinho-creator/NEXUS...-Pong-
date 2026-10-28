@@ -111,4 +111,4 @@ To run it locally, keep `index.html`, `style.css`, `script.js` and `favicon.svg`
 
 ---
 
-<p align="center">Made with 💙 and JavaScript.</p>
+<p align="center">Made with ANGER and JavaScript.</p>
